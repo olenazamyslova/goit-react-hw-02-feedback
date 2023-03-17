@@ -13,29 +13,19 @@ class App extends Component {
   onLeaveFeedback = e => {
     const currentBtnValue = e.currentTarget.value;
     this.setState(prevState => ({
-      ...prevState,
       [currentBtnValue]: prevState[currentBtnValue] + 1,
     }));
   };
 
   countTotalFeedback = () => {
     const valuesArr = Object.values(this.state);
-    return valuesArr.reduce((acc, val) => {
-      acc += val;
-      return acc;
-    });
+    return valuesArr.reduce((acc, val) => acc + val);
   };
+
   countZero = () => {
-    if (
-      this.state.good === 0 &&
-      this.state.neutral === 0 &&
-      this.state.bad === 0
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.countTotalFeedback() === 0;
   };
+
   countPositiveFeedbackPercentage = () => {
     return Math.trunc((this.state.good / this.countTotalFeedback()) * 100);
   };
